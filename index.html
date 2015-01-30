@@ -27,9 +27,29 @@
 		}).addTo(map);
 
 		var a = d3.csv('data/Points_for_testing.csv', function(err, data){
-			console.log(data);
+
+			//borrowed from here http://bl.ocks.org/sumbera/10463358
+            function reformat(array) {
+                var data = [];
+                array.map(function (d, i) {
+
+                    data.push({
+                        id: i,
+                        type: "Feature",
+                        geometry: {
+                            coordinates: [+d.longitude, +d.latitude],
+                            type: "Point"
+                        }
+                       
+
+                    });
+                });
+                return data;
+            }
+            return { type: "FeatureCollection", features: reformat(data) };
 		});
 
+		console.log(a);
 	</script>
 </body>
 </html>
