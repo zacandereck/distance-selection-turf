@@ -26,8 +26,9 @@
 			id: 'examples.map-i875mjb7'
 		}).addTo(map);
 
-		var a = d3.csv('data/Points_for_testing.csv');
-		console.log(a);
+		var a = d3.csv('data/Points_for_testing.csv', function(err, data){
+			console.log(data);
+		});
 
 	</script>
 </body>
