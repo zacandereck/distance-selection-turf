@@ -77,12 +77,18 @@
 		    L.geoJson(justFarBuffer).addTo(map);
 		    
 		    var bigBufferPoints = turf.within(geoData, turf.featurecollection([justFarBuffer]));
-		    L.geoJson(bigBufferPoints,{
+		    // L.geoJson(bigBufferPoints,{
+		    // 	pointToLayer: function (feature, latlng) {
+			   //      return L.circleMarker(latlng, redMarker);
+			   //  }
+		    // }).addTo(map);
+
+			var nearestToPoint = turf.nearest(selectedTurfPoint, bigBufferPoints);
+		    L.geoJson(nearestToPoint,{
 		    	pointToLayer: function (feature, latlng) {
 			        return L.circleMarker(latlng, redMarker);
 			    }
 		    }).addTo(map);
-
 		};
 		d3.csv('data/Points_for_testing.csv', function(err, inData){
 			//borrowed from here http://bl.ocks.org/sumbera/10463358
