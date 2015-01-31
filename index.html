@@ -10,10 +10,12 @@
 	<link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
 </head>
 <body>
-	<div id="map" style="width: 600px; height: 400px"></div>
+	<div id="map" style="width: 100%; height: 700px; margin: 0; padding: 0;"></div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
 	<script src="http://leafletjs.com/dist/leaflet.js"></script>
+	<!--<script src="//api.tiles.mapbox.com/mapbox.js/plugins/turf/v1.3.0/turf.js"></script>-->
+	<script src="js/turf.js"></script>
 	<script>
 
 		var map = L.map('map').setView([51.505, -0.09], 13);
@@ -26,30 +28,89 @@
 			id: 'examples.map-i875mjb7'
 		}).addTo(map);
 
-		var a = d3.csv('data/Points_for_testing.csv', function(err, data){
+		//declare empty point layer which will have data added to it when d3 parses the csv
+		var geoJsonLyr, geoData;
 
+		//circle marker styles
+		var greenMarker = {
+		    radius: 9,
+		    fillColor: "#ff7800",
+		    color: "#ffffff",
+		    weight: 2,
+		    opacity: 1,
+		    fillOpacity: 0.8
+		};
+
+		var redMarker = {
+		    radius: 6,
+		    fillColor: "#ff7800",
+		    color: "#ffffff",
+		    weight: 2,
+		    opacity: 1,
+		    fillOpacity: 0.8
+		};
+
+		var greyMarker = {
+		    radius: 6,
+		    fillColor: "#6B6B6B",
+		    color: "#ffffff",
+		    weight: 2,
+		    opacity: 1,
+		    fillOpacity: 0.8
+		};
+		//clickstart set up
+		function onMapClick(e) {
+			//get the clicked point as a turf point
+		    var selectedTurfPoint = turf.point(e.layer.feature.geometry.coordinates);
+
+		    //generate the minimum distance buffer
+		    var bufferedTurfPolyNear = turf.buffer(selectedTurfPoint, .25, 'kilometers');
+
+		    //generate maximum distance buffer
+		    var bufferedTurfPolyFar = turf.buffer(selectedTurfPoint, .5, 'kilometers');
+
+		    //erase the min dist buffer from max dist buffer, donut!
+		    var justFarBuffer = turf.erase(
+		    	turf.polygon(bufferedTurfPolyFar.features[0].geometry.coordinates), 
+		    	turf.polygon(bufferedTurfPolyNear.features[0].geometry.coordinates)
+		    );
+		    L.geoJson(justFarBuffer).addTo(map);
+		    
+		    var bigBufferPoints = turf.within(geoData, turf.featurecollection([justFarBuffer]));
+		    L.geoJson(bigBufferPoints,{
+		    	pointToLayer: function (feature, latlng) {
+			        return L.circleMarker(latlng, redMarker);
+			    }
+		    }).addTo(map);
+
+		};
+		d3.csv('data/Points_for_testing.csv', function(err, inData){
 			//borrowed from here http://bl.ocks.org/sumbera/10463358
-            function reformat(array) {
-                var data = [];
-                array.map(function (d, i) {
-
-                    data.push({
-                        id: i,
-                        type: "Feature",
-                        geometry: {
-                            coordinates: [+d.longitude, +d.latitude],
-                            type: "Point"
-                        }
-                       
-
-                    });
+            var data = [];
+            inData.map(function (d, i) {
+                data.push({
+                    id: i,
+                    type: "Feature",
+                    properties: {
+                    	uid: d.UID
+                    },
+                    geometry: {
+                        coordinates: [+d.Longitude, +d.Latitude],
+                        type: "Point"
+                    }
                 });
-                return data;
-            }
-            return { type: "FeatureCollection", features: reformat(data) };
+            });
+            geoData = { type: "FeatureCollection", features: data };
+            geoJsonLyr = L.geoJson(geoData, {
+	            	pointToLayer: function (feature, latlng) {
+				        return L.circleMarker(latlng, greyMarker);
+				    }
+				})
+            	.on('click', onMapClick)
+            	.addTo(map);
+            map.fitBounds(geoJsonLyr.getBounds());
 		});
 
-		console.log(a);
 	</script>
 </body>
 </html>
