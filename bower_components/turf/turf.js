@@ -7450,11 +7450,7 @@ module.exports = function(poly1, poly2, done){
   }
   var reader = new jsts.io.GeoJSONReader();
   var a = reader.read(JSON.stringify(poly1.geometry));
-  // console.log('a');
-  // console.log(a);
   var b = reader.read(JSON.stringify(poly2.geometry));
-  // console.log('b');
-  // console.log(b);
   var erased = a.difference(b);
   var parser = new jsts.io.GeoJSONParser();
   erased = parser.write(erased);
@@ -11564,7 +11560,6 @@ var featureCollection = require('turf-featurecollection');
 
 module.exports = function(ptFC, polyFC){
   pointsWithin = featureCollection([]);
-  console.log(polyFC.features);
   polyFC.features.forEach(function(poly){
     ptFC.features.forEach(function(pt){
       var isInside = inside(pt, poly);

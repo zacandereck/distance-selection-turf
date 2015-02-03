@@ -1,8 +1,9 @@
-#map {
+body, #map {
 	width: 100%;
-	height: 700px;
+	height: 100%;
 	margin: 0;
 	padding: 0;
+	position: absolute;
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
