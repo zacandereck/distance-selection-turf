@@ -1,9 +1,12 @@
-body, #map {
+body {
+	position: absolute;
+}
+
+#map {
 	width: 100%;
-	height: 100%;
+	height: 600px;
 	margin: 0;
 	padding: 0;
-	position: absolute;
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
@@ -18,4 +21,9 @@ body, #map {
 
 .leaflet-popup-content {
 	width: 25px;
+}
+
+.container-full {
+  margin: 0 auto;
+  width: 100%;
 }

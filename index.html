@@ -2,20 +2,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Leaflet Quick Start Guide Example</title>
+	<title>distance chaining</title>
 	<meta charset="utf-8" />
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<div id="map"></div>
+	<div class="container">
+		<div id="content-full">
+			<div class="row">
+			    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+			        <li class="active"><a href="#red" data-toggle="tab">Red</a></li>
+			        <li><a href="#orange" data-toggle="tab">Orange</a></li>
+			        <li><a href="#yellow" data-toggle="tab">Yellow</a></li>
+			        <li><a href="#green" data-toggle="tab">Green</a></li>
+			        <li><a href="#blue" data-toggle="tab">Blue</a></li>
+			    </ul>
+			</div>
+			<div class="row">
+				<div class="col-12">
+			    	<div id="my-tab-content" class="tab-content">
+			    		<div class="tab-pane active" id="red">
+							<div id="map"></div>
+						</div>
+					</div>
+					<div class="tab-pane" id="orange">
+			            <h1>Orange</h1>
+			            <p>orange orange orange orange orange</p>
+			        </div>
+			        <div class="tab-pane" id="yellow">
+			            <h1>Yellow</h1>
+			            <p>yellow yellow yellow yellow yellow</p>
+			        </div>
+			        <div class="tab-pane" id="green">
+			            <h1>Green</h1>
+			            <p>green green green green green</p>
+			        </div>
+			        <div class="tab-pane" id="blue">
+			            <h1>Blue</h1>
+			            <p>blue blue blue blue blue</p>
+			        </div>
+			    </div>
+		    </div>
+	    </div>
 
+	</div>
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/d3/d3.min.js"></script>
 	<script src="bower_components/leaflet/dist/leaflet.js"></script>
 	<script src="bower_components/turf/turf.min.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	
 	<script src="js/stuff.js"></script>
 </body>
 </html>
