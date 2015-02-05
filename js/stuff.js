@@ -12,7 +12,7 @@
 			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
 				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-			id: 'examples.map-i875mjb7'
+			id: 'hoganmaps.ikkpodh4'
 		}).addTo(map);
 
 		//declare empty point layer which will have data added to it when d3 parses the csv
