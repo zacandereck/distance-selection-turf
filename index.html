@@ -7,38 +7,51 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
-	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="bower_components/bootswatch/paper/bootstrap.min.css" />
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<h4>Distance Selection Example</h4>
-				</br>
-				<form class="form-horizontal">
-  					<fieldset>
-						<div class="form-group">
-					      	<label for="innerBuffer" class="col-lg-2 small">Inner</br>Distance</label>
-					      	<div class="col-lg-10">
-					      	  <input type="text" class="form-control" id="innerBufferTXT" placeholder="250" >
-					      	</div>
-					    </div>
-					    <div class="form-group">
-			    		    <label for="outerBuffer" class="col-lg-2 small">Outer</br>Distance</label>
-					      	<div class="col-lg-10">
-					        	<input type="text" class="form-control" id="outerBufferTXT" placeholder="500">
-					      	</div>	
-					    </div>
-					</fieldset>
-				</form>
-				</br>
-				<hr>
-				<h4>Process</h4>
-				<p>derp derp derp</p>
-				<hr>
-				<h4>About</h4>
-				<p>This map uses various open-source projects to do some on-the-fly geoprocessing. Open-sourced projects used include turfjs, leafletjs, bootstrap, jquery, d3js. Bootstrap theme is from <a href="http://bootswatch.com/paper/">Bootswatch</a>. Project hosted in <a href="https://github.com/hoganmaps/distance-selection-chaining">Github</a>.</p>
+				<div class="main-content">
+					<h5>Distance Selection Example</h5>
+					</br>
+					<form class="form-horizontal">
+	  					<fieldset>
+							<div class="form-group">
+						      	<label for="innerBuffer" class="col-lg-2 small">Inner</br>Distance</label>
+						      	<div class="col-lg-10">
+						      	  <input type="text" class="form-control" id="innerBufferTXT" placeholder="250" >
+						      	</div>
+						    </div>
+						    <div class="form-group">
+				    		    <label for="outerBuffer" class="col-lg-2 small">Outer</br>Distance</label>
+						      	<div class="col-lg-10">
+						        	<input type="text" class="form-control" id="outerBufferTXT" placeholder="500">
+						      	</div>	
+						    </div>
+						</fieldset>
+					</form>
+					<p><a class="btn btn-primary btn-lg pull-right">OK! go</a></p>
+					</br>
+					<hr>
+					<h5>Process</h5>
+					<p>1. We use D3.js to read a CSV file and display the data as GeoJSON on the map.</p>
+					<p>2. The user can click a point, and that point is then turned in to a turf.point object. (show)</p>
+					<p>3. We then create two buffers of the point, one for the inner number and outer buffer you specified. (show)</p>
+					<p>4. We use turf.erase to remove the inner polygon from the outer polygon, creating a donut! (show)</p>
+					<p>5. Now we use turf.within to extract just the GeoJSON points from the donut. (show)</p>
+					<p>6. Finally, we use turf.nearest to compare the original point and the points that intersected the donut, returning the nearest point within the inner and outer ranges.
+					<hr>
+					<p>
+						Built with: <a href="http://turfjs.org/">turfjs</a>, <a href="http://leafletjs.com/">leafletjs</a>, <a href="http://getbootstrap.com/">bootstrap</a>, <a href="http://jquery.com/">jquery</a>, <a href="http://d3js.org/">d3js</a>. Paper theme from <a href="http://bootswatch.com/paper/">Bootswatch</a>.
+					</p>
+				</div>
+				<div class="footer">
+					<hr>
+					Assembled by <a href="http://twitter.com/hoganmaps">@hoganmaps</a> & <a href="http://twitter.com/stevenheinrich">@stevenheinrich</a>
+				</div>
 			</div>
 			<div class="col-md-9">
 				<div id="map"></div>

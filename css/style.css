@@ -20,7 +20,15 @@ html, body, .container, #map, .container {
 .col-md-9, .col-md-3, .row {
 	height: 100%;
 }
-
+/*.main-content {
+	bottom: 30px;
+}*/
+.footer {
+	bottom: 0;
+	position: absolute;
+	background-color: white;
+	z-index: 1000;
+}
 /*.col-md-9, .col-md-3 {
 	padding: 10px;
 }*/
