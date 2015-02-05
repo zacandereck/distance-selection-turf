@@ -2,7 +2,10 @@
 //     $('#tabs').tab();
 // });
 
-		var map = L.map('map').setView([51.505, -0.09], 13);
+		var map = L.map('map',{
+			scrollWheelZoom: false,
+			zoomControl: false
+		}).setView([51.505, -0.09], 13);
 
 		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 			maxZoom: 18,

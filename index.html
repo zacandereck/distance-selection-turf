@@ -12,44 +12,41 @@
 </head>
 <body>
 	<div class="container">
-		<div id="content-full">
-			<div class="row">
-			    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-			        <li class="active"><a href="#red" data-toggle="tab">Red</a></li>
-			        <li><a href="#orange" data-toggle="tab">Orange</a></li>
-			        <li><a href="#yellow" data-toggle="tab">Yellow</a></li>
-			        <li><a href="#green" data-toggle="tab">Green</a></li>
-			        <li><a href="#blue" data-toggle="tab">Blue</a></li>
-			    </ul>
+		<div class="row">
+			<div class="col-md-3">
+				<h4>Distance Selection Example</h4>
+				</br>
+				<form class="form-horizontal">
+  					<fieldset>
+						<div class="form-group">
+					      	<label for="innerBuffer" class="col-lg-2 small">Inner</br>Distance</label>
+					      	<div class="col-lg-10">
+					      	  <input type="text" class="form-control" id="innerBufferTXT" placeholder="250" >
+					      	</div>
+					    </div>
+					    <div class="form-group">
+			    		    <label for="outerBuffer" class="col-lg-2 small">Outer</br>Distance</label>
+					      	<div class="col-lg-10">
+					        	<input type="text" class="form-control" id="outerBufferTXT" placeholder="500">
+					      	</div>	
+					    </div>
+					</fieldset>
+				</form>
+				</br>
+				<hr>
+				<h4>Process</h4>
+				<p>derp derp derp</p>
+				<hr>
+				<h4>About</h4>
+				<p>This map uses various open-source projects to do some on-the-fly geoprocessing. Open-sourced projects used include turfjs, leafletjs, bootstrap, jquery, d3js. Bootstrap theme is from <a href="http://bootswatch.com/paper/">Bootswatch</a>. Project hosted in <a href="https://github.com/hoganmaps/distance-selection-chaining">Github</a>.</p>
 			</div>
-			<div class="row">
-				<div class="col-12">
-			    	<div id="my-tab-content" class="tab-content">
-			    		<div class="tab-pane active" id="red">
-							<div id="map"></div>
-						</div>
-					</div>
-					<div class="tab-pane" id="orange">
-			            <h1>Orange</h1>
-			            <p>orange orange orange orange orange</p>
-			        </div>
-			        <div class="tab-pane" id="yellow">
-			            <h1>Yellow</h1>
-			            <p>yellow yellow yellow yellow yellow</p>
-			        </div>
-			        <div class="tab-pane" id="green">
-			            <h1>Green</h1>
-			            <p>green green green green green</p>
-			        </div>
-			        <div class="tab-pane" id="blue">
-			            <h1>Blue</h1>
-			            <p>blue blue blue blue blue</p>
-			        </div>
-			    </div>
-		    </div>
-	    </div>
-
+			<div class="col-md-9">
+				<div id="map"></div>
+			</div>
+		</div>
 	</div>
+
+
 	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/d3/d3.min.js"></script>
 	<script src="bower_components/leaflet/dist/leaflet.js"></script>
