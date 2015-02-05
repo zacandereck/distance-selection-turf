@@ -14,7 +14,9 @@ html, body, .container, #map, .container {
 	padding: 0;
 	margin: 0;
 }
-.col-md-3 {
+.col-md-3, .col-sm-3 {
+	overflow-y: scroll;
+	overflow-x:hidden;
 	padding-right: 10px;
 }
 .col-md-9, .col-md-3, .row {

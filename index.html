@@ -13,7 +13,7 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3">
+			<div class="col-md-3 col-lg-4">
 				<div id="content">
 					<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
 						<li class="active"><a href="#main" data-toggle="tab">Main</a></li>
@@ -22,43 +22,42 @@
 					</ul>
 					<div id="my-tab-content" class="tab-content">
 					    <div class="tab-pane active" id="main">
-											<h5>Distance Selection Example</h5>
-											</br>
-											<form class="form-horizontal">
-							  					<fieldset>
-													<div class="form-group">
-												      	<label for="innerBuffer" class="col-lg-2 small">Inner</br>Distance</label>
-												      	<div class="col-lg-10">
-												      	 	<input type="text" class="form-control" id="innerBuffer" placeholder="250">
-												      	</div>
-												    </div>
-												    <div class="form-group">
-										    		    <label for="outerBuffer" class="col-lg-2 small">Outer</br>Distance</label>
-												      	<div class="col-lg-10">
-												        	<input type="text" class="form-control" id="outerBuffer" placeholder="500">
-												      	</div>	
-												    </div>
-												</fieldset>
-											</form>
-											<p>
-												<a class="btn btn-primary btn-lg pull-right">OK! go</a>
-											</p>
-											</br>
-											<hr>
-											<h5>Geoprocessing Steps</h5>
-											<p>
-												1. We use D3.js to read a CSV file and display the data as GeoJSON on the map.</p>
-											<p>
-												2. The user can click a point, and that point is then turned in to a turf.point object. (show)</p>
-											<p>
-												3. We then create two buffers of the point, one for the inner number and outer buffer you specified. (show)</p>
-											<p>
-												4. We use turf.erase to remove the inner polygon from the outer polygon, creating a donut! (show)</p>
-											<p>
-												5. Now we use turf.within to extract just the GeoJSON points from the donut. (show)</p>
-											<p>
-												6. Finally, we use turf.nearest to compare the original point and the points that intersected the donut, returning the nearest point within the inner and outer ranges.</p>
-
+							<h5>Distance Selection Example</h5>
+							</br>
+							<form class="form-horizontal">
+			  					<fieldset>
+									<div class="form-group">
+								      	<label for="innerBuffer" class="col-lg-2 small">Inner</br>Distance</label>
+								      	<div class="col-lg-10">
+								      	 	<input type="text" class="form-control" id="innerBuffer" placeholder="250">
+								      	</div>
+								    </div>
+								    <div class="form-group">
+						    		    <label for="outerBuffer" class="col-lg-2 small">Outer</br>Distance</label>
+								      	<div class="col-lg-10">
+								        	<input type="text" class="form-control" id="outerBuffer" placeholder="500">
+								      	</div>	
+								    </div>
+								</fieldset>
+							</form>
+							</br>
+							<hr>
+							<h5>How To</h5>
+							<p>Enter an inner and outter buffer distance and start clicking points!</p>
+							<hr>
+							<h5>Geoprocessing Steps</h5>
+							<p>
+								1. We use D3.js to read a CSV file and display the data as GeoJSON on the map.</p>
+							<p>
+								2. The user can click a point, and that point is then turned in to a turf.point object.</p>
+							<p>
+								3. We then create two buffers of the point, one for the inner number and outer buffer you specified.</p>
+							<p>
+								4. We use turf.erase to remove the inner polygon from the outer polygon, creating a donut!</p>
+							<p>
+								5. Now we use turf.within to extract just the GeoJSON points from the donut.</p>
+							<p>
+								6. Finally, we use turf.nearest to compare the original point and the points that intersected the donut, returning the nearest point within the inner and outer ranges.</p>
 						</div>
 						<div class="tab-pane" id="output">
 							<table class="table table-striped table-hover ">
@@ -96,7 +95,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-9">
+			<div class="col-md-9 col-lg-8">
 				<div id="map"></div>
 			</div>
 		</div>

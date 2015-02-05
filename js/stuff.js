@@ -76,7 +76,10 @@
 			    
 			    //find all the points within the buffer donut
 			    var bigBufferPoints = turf.within(geoData, turf.featurecollection([justFarBuffer]));
-
+			    L.geoJson(bigBufferPoints,{
+			    	pointToLayer: function (feature, latlng) {
+				        return L.circleMarker(latlng, redMarker);
+				    }}).addTo(map);
 			    try{
 				    for (i = 0; i < usedPointArray.length; i++) { 
 				    	console.log(usedPointArray);
@@ -97,12 +100,12 @@
 					//err
 				}
 			    //calculate the buffer donut point closest to the origin/selectedTurfPoint and show it on map
-				nearestToPoint = turf.nearest(selectedTurfPoint, bigBufferPoints);
-			    L.geoJson(nearestToPoint,{
-			    	pointToLayer: function (feature, latlng) {
-				        return L.circleMarker(latlng, redMarker);
-				    }
-			    }).addTo(map);
+				// nearestToPoint = turf.nearest(selectedTurfPoint, bigBufferPoints);
+			    // L.geoJson(nearestToPoint,{
+			    // 	pointToLayer: function (feature, latlng) {
+				   //      return L.circleMarker(latlng, redMarker);
+				   //  }
+			    // }).addTo(map);
 
 			    //after 1.5 seconds remove the buffer
 			    setTimeout( function(){map.removeLayer(buffShow)}, 1500 );
