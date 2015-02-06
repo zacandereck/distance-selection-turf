@@ -1,7 +1,10 @@
 # distance-selection-chaining
 
-## Demo
-http://geosteve.github.io/SimpleGeo-Modeling/
+## Demonstration
+
+**Here is a sneak peek at the project:**
+
+[Distance Selection Chaining](http://hoganmaps.github.io/distance-selection-chaining)
 
 ## Installation
 
