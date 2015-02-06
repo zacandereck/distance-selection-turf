@@ -4,7 +4,7 @@
 
 **Here is a sneak peek at the project:**
 
-[Distance Selection Chaining](http://hoganmaps.github.io/distance-selection-chaining)
+[Distance Selection Chaining](http://hoganmaps.github.io/distance-selection-turf)
 
 ## Installation
 
@@ -12,6 +12,11 @@
 
 ```bash
   $ git clone https://github.com/hoganmaps/distance-selection-chaining.git
+```
+
+**Install Bower Dependencies**
+```bash
+  $bower install
 ```
 
 **Open the app in your browser:**

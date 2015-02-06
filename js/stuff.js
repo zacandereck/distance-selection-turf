@@ -48,12 +48,11 @@ function meter2km(input){
 
 // array to store clicked points
 var usedPointArray = []
-
+var identifiedPointsLayer = L.layerGroup();
 var polyAreaUnion, polyAreaUnionDisplay, selectablePoints;
 
 var toggle = false;
-//Toggle Union Layer Toggle
-$('#toggleShowBuffers').click(function(){
+function toggleBufLayer(){
 	if(!toggle){
 		$('#toggleShowBuffers').html('Hide All Buffers');
 		$('#toggleShowBuffers').addClass('active');
@@ -65,29 +64,48 @@ $('#toggleShowBuffers').click(function(){
 		map.removeLayer(polyAreaUnionDisplay);
 	}
 	toggle = !toggle;
+}
+//Toggle Union Layer Toggle
+$('#toggleShowBuffers').click(function(){
+	toggleBufLayer();
 });
 
+var pointNumber = 1;
 
 //clickstart set up
 function onMapClick(e) {
 	if(selectablePoints){
 		map.removeLayer(selectablePoints);
 	}
+	var reTurnOnBuffers = false;
+	if(map.hasLayer(polyAreaUnionDisplay)){
+		toggleBufLayer();
+		reTurnOnBuffers = !reTurnOnBuffers;
+	};
 	//get the clicked point as a turf point
     var selectedTurfPoint = turf.point(e.layer.feature.geometry.coordinates);
-
+    $('.outputTable').append('<tbody><tr><td>'+ String(pointNumber) +',</td><td>'+e.layer.feature.properties.uid+',</td><td>'+String(e.layer.feature.geometry.coordinates[1])+',</td><td>'+String(e.layer.feature.geometry.coordinates[0])+'</td></tr></tbody>');
     //push in to the usedPointArray
-    usedPointArray.push(e.layer.feature)
-    console.log(e.layer);
-	delete e.layer;
-	console.log(e.layer);
+    // usedPointArray.push(e.layer.feature)
+	
     //add the point as geojson to the map
-    var startPoint = L.geoJson(selectedTurfPoint,{
-    	pointToLayer: function (feature, latlng) {
-	        return L.circleMarker(latlng, greenMarker);
-	    }
-	}).addTo(map);
-
+ //    var startPoint = L.geoJson(selectedTurfPoint,{
+ //    	pointToLayer: function (feature, latlng) {
+	//         return L.circleMarker(latlng, greenMarker);
+	//     }
+	// }).addTo(map);
+	
+	identifiedPointsLayer.addLayer(
+		L.circleMarker([
+			e.layer.feature.geometry.coordinates[1],
+			e.layer.feature.geometry.coordinates[0]],
+			{
+				radius: 9, fillColor: "#00b200", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.9
+			}
+	).bindPopup(String(pointNumber)));
+	pointNumber = pointNumber + 1;
+	// console.log(e.layer.feature.geometry.coordinates);
+	delete e.layer;
 	//generate the minimum distance buffer
     var bufferedTurfPolyNear = turf.buffer(selectedTurfPoint, meter2km(innerDistance), 'kilometers');
 
@@ -101,7 +119,7 @@ function onMapClick(e) {
 	    );
 
 	    //Show the buffer donut on the map
-	    var buffShow = L.geoJson(justFarBuffer).addTo(map);
+	    var buffShow = L.geoJson(justFarBuffer,{icon: greenMarker}).addTo(map);
 	    if(!polyAreaUnion){
 	    	polyAreaUnion = justFarBuffer;
 	    	polyAreaUnionDisplay = L.geoJson(justFarBuffer);
@@ -147,7 +165,14 @@ function onMapClick(e) {
 		   //  }
 	    // }).addTo(map);
 
-	    //after 1.5 seconds remove the buffer
+		// if the user had the Show all Buffer Layers selected, turn them back on
+	    if(reTurnOnBuffers){
+	    	toggleBufLayer();
+	    };
+	    map.removeLayer(identifiedPointsLayer);
+	    identifiedPointsLayer.addTo(map);
+	    // map.removeLayer(identifiedPointsLayer);
+	    // map.addLayer(identifiedPointsLayer);
 	    setTimeout( function(){map.removeLayer(buffShow)}, 1500 );
 
 };

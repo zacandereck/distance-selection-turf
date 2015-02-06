@@ -22,3 +22,9 @@ html, body, .container, #map, .container {
 .col-md-9, .col-md-3, .row {
 	height: 100%;
 }
+
+.leaflet-popup-content-wrapper {
+	text-align: center;
+	border-radius: 0;
+	font-size: 20px;
+}
