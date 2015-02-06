@@ -1,5 +1,8 @@
 # distance-selection-chaining
 
+## Demo
+http://geosteve.github.io/SimpleGeo-Modeling/
+
 ## Installation
 
 **Clone the repo:**
