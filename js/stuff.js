@@ -11,6 +11,11 @@ $( "#outerBuffer" ).change(function(e) {
 	outerDistance = e.target.value;
 });
 
+// configure reset button
+$('#resetButton').click(function(e){
+	window.location.reload();
+});
+
 // map object
 var map = L.map('map',{
 	scrollWheelZoom: false,
@@ -26,12 +31,13 @@ L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 	id: 'hoganmaps.ikkpodh4'
 }).addTo(map);
 
+
 //declare empty point layer which will have data added to it when d3 parses the csv
 var geoJsonLyr, geoData, nearestToPoint;
 
 //circle marker styles
 var greenMarker = { radius: 9, fillColor: "#00b200", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.9 },
-	redMarker   = { radius: 6, fillColor: "#ff7800", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.8 },
+	orangeMarker   = { radius: 6, fillColor: "#ff7800", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.8 },
 	greyMarker  = { radius: 6, fillColor: "#6B6B6B", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.8 };
 
 
@@ -39,23 +45,51 @@ function meter2km(input){
 	return (Number(input)/1000)
 }
 
+
+// array to store clicked points
+var usedPointArray = []
+
+var polyAreaUnion, polyAreaUnionDisplay, selectablePoints;
+
+var toggle = false;
+//Toggle Union Layer Toggle
+$('#toggleShowBuffers').click(function(){
+	if(!toggle){
+		$('#toggleShowBuffers').html('Hide All Buffers');
+		$('#toggleShowBuffers').addClass('active');
+		map.addLayer(polyAreaUnionDisplay);
+	}
+	else {
+		$('#toggleShowBuffers').html('Show All Buffers');
+		$('#toggleShowBuffers').removeClass('active');
+		map.removeLayer(polyAreaUnionDisplay);
+	}
+	toggle = !toggle;
+});
+
+
 //clickstart set up
 function onMapClick(e) {
-	
-	var usedPointArray = []
-	function runProcess(inPoint){
-		//get the clicked point as a turf point
-	    var selectedTurfPoint = turf.point(inPoint);
-	    usedPointArray.push(inPoint)
-	    L.geoJson(selectedTurfPoint,{
-	    	pointToLayer: function (feature, latlng) {
-		        return L.circleMarker(latlng, greenMarker);
-		    }})
-	    	.addTo(map);
+	if(selectablePoints){
+		map.removeLayer(selectablePoints);
+	}
+	//get the clicked point as a turf point
+    var selectedTurfPoint = turf.point(e.layer.feature.geometry.coordinates);
 
-	    //generate the minimum distance buffer
+    //push in to the usedPointArray
+    usedPointArray.push(e.layer.feature)
+    console.log(e.layer);
+	delete e.layer;
+	console.log(e.layer);
+    //add the point as geojson to the map
+    var startPoint = L.geoJson(selectedTurfPoint,{
+    	pointToLayer: function (feature, latlng) {
+	        return L.circleMarker(latlng, greenMarker);
+	    }
+	}).addTo(map);
 
-	    var bufferedTurfPolyNear = turf.buffer(selectedTurfPoint, meter2km(innerDistance), 'kilometers');
+	//generate the minimum distance buffer
+    var bufferedTurfPolyNear = turf.buffer(selectedTurfPoint, meter2km(innerDistance), 'kilometers');
 
 	    //generate maximum distance buffer
 	    var bufferedTurfPolyFar = turf.buffer(selectedTurfPoint, meter2km(outerDistance), 'kilometers');
@@ -68,25 +102,36 @@ function onMapClick(e) {
 
 	    //Show the buffer donut on the map
 	    var buffShow = L.geoJson(justFarBuffer).addTo(map);
+	    if(!polyAreaUnion){
+	    	polyAreaUnion = justFarBuffer;
+	    	polyAreaUnionDisplay = L.geoJson(justFarBuffer);
+	    }
+	    else {
+	    	polyAreaUnion = turf.union(polyAreaUnion, justFarBuffer);
+	    	polyAreaUnionDisplay = L.geoJson(polyAreaUnion);
+	    }
+	    // polyAreaUnion = turf.union(polyAreaUnion, justFarBuffer);
+	    //Union the poly into thepolyAreaUnion
 	    
 	    //find all the points within the buffer donut
 	    var bigBufferPoints = turf.within(geoData, turf.featurecollection([justFarBuffer]));
-	    L.geoJson(bigBufferPoints,{
+	    selectablePoints = L.geoJson(bigBufferPoints,{
 	    	pointToLayer: function (feature, latlng) {
-		        return L.circleMarker(latlng, redMarker);
-		    }}).addTo(map);
+		        return L.circleMarker(latlng, orangeMarker);
+		    }
+		})
+	    .on('click', onMapClick)
+		.addTo(map);
+
 	    try{
 		    for (i = 0; i < usedPointArray.length; i++) { 
-		    	console.log(usedPointArray);
 		    	for (j = 0; j < bigBufferPoints.features.length; j++) { 
 		    		if(
 		    			(bigBufferPoints.features[j].geometry.coordinates[0] === usedPointArray[i][0]) && 
 		    			(bigBufferPoints.features[j].geometry.coordinates[1] === usedPointArray[i][1]) ){
 		    			// 	console.log('deleting a point');
 		    			// console.log(bigBufferPoints.features[j]);
-		    			console.log(bigBufferPoints.features[j].geometry.coordinates[0]);
-		    			console.log(usedPointArray[i][0]);
-		    				delete bigBufferPoints.features[j];
+		    			delete bigBufferPoints.features[j];
 		    		}
 		    	}
 			};
@@ -104,11 +149,10 @@ function onMapClick(e) {
 
 	    //after 1.5 seconds remove the buffer
 	    setTimeout( function(){map.removeLayer(buffShow)}, 1500 );
-	}
-
-	runProcess(e.layer.feature.geometry.coordinates);
 
 };
+
+
 
 //parse the CSV, turn it in to geojson, and put it on the map.
 d3.csv('data/Points_for_testing.csv', function(err, inData){
