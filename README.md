@@ -4,14 +4,15 @@
 
 **Here is a sneak peek at the project:**
 
-[Distance Selection Chaining](http://hoganmaps.github.io/distance-selection-turf)
+[Distance Selection Example](http://hoganmaps.github.io/distance-selection-turf?la)
+This example has two CSV's. 'sf' and 'la'. To switch between one and another, change the URL to be one of the CSV names in the data folder.
 
-## Installation
+## Setup
 
 **Clone the repo:**
 
 ```bash
-  $ git clone https://github.com/hoganmaps/distance-selection-chaining.git
+  $ git clone https://github.com/hoganmaps/distance-selection-turf.git
 ```
 
 **Install Bower Dependencies**

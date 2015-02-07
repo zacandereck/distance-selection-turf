@@ -3,6 +3,10 @@ var innerDistance = 250,
 	outerDistance = 500;
 var CSV = window.location.search.substring(1);
 
+if (!CSV) {
+	CSV = 'sf'
+}
+
 //On change to the text inputs, set the innerDistance and outerDistance
 $( "#innerBuffer" ).change(function(e) {
 	innerDistance = e.target.value;
