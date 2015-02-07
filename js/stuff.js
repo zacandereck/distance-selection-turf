@@ -1,6 +1,7 @@
 // setting default distances
 var innerDistance = 250, 
 	outerDistance = 500;
+var CSV = window.location.search.substring(1);
 
 //On change to the text inputs, set the innerDistance and outerDistance
 $( "#innerBuffer" ).change(function(e) {
@@ -180,7 +181,7 @@ function onMapClick(e) {
 
 
 //parse the CSV, turn it in to geojson, and put it on the map.
-d3.csv('data/Points_for_testing.csv', function(err, inData){
+d3.csv('data/' + CSV + '.csv', function(err, inData){
 	//borrowed from here http://bl.ocks.org/sumbera/10463358
     var data = [];
     inData.map(function (d, i) {
