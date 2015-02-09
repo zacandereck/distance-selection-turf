@@ -23,7 +23,7 @@ $('#resetButton').click(function(e){
 
 // map object
 var map = L.map('map',{
-	scrollWheelZoom: false,
+	scrollWheelZoom: true,
 	zoomControl: false
 }).setView([51.505, -0.09], 13);
 
@@ -178,7 +178,7 @@ function onMapClick(e) {
 	    identifiedPointsLayer.addTo(map);
 	    // map.removeLayer(identifiedPointsLayer);
 	    // map.addLayer(identifiedPointsLayer);
-	    setTimeout( function(){map.removeLayer(buffShow)}, 1500 );
+	    setTimeout( function(){map.removeLayer(buffShow)}, 2500 );
 
 };
 
