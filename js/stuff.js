@@ -25,7 +25,7 @@ $('#resetButton').click(function(e){
 var map = L.map('map',{
 	scrollWheelZoom: true,
 	zoomControl: false
-}).setView([51.505, -0.09], 13);
+}).setView([38.515875, -98.779462], 13);
 
 // basemap
 L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
