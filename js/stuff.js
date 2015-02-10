@@ -21,20 +21,32 @@ $('#resetButton').click(function(e){
 	window.location.reload();
 });
 
-// map object
-var map = L.map('map',{
-	scrollWheelZoom: true,
-	zoomControl: false
-}).setView([38.515875, -98.779462], 13);
-
-// basemap
-L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+//basemap variables
+var satellite = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+}),
+    streets   = L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
 	maxZoom: 18,
 	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
 		'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 		'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 	id: 'hoganmaps.ikkpodh4'
-}).addTo(map);
+});
+
+// map object
+var map = L.map('map',{
+	scrollWheelZoom: true,
+	zoomControl: false,
+	layers: [satellite, streets]
+}).setView([38.515875, -98.779462], 13);
+
+//basemap variable controls
+var baseMaps = {
+    "Satellite": satellite,
+    "Streets": streets
+};
+L.control.layers(baseMaps).addTo(map);
+
 
 
 //declare empty point layer which will have data added to it when d3 parses the csv
