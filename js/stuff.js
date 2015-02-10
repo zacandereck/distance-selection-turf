@@ -46,8 +46,9 @@ var greenMarker = { radius: 9, fillColor: "#00b200", color: "#ffffff", weight: 2
 	greyMarker  = { radius: 6, fillColor: "#6B6B6B", color: "#ffffff", weight: 2, opacity: 1, fillOpacity: 0.8 };
 
 
-function meter2km(input){
-	return (Number(input)/1000)
+function feet2km(input){
+	//input feet * 0.0003048 = km
+	return (Number(input)*0.0003048)
 }
 
 
@@ -112,10 +113,10 @@ function onMapClick(e) {
 	// console.log(e.layer.feature.geometry.coordinates);
 	delete e.layer;
 	//generate the minimum distance buffer
-    var bufferedTurfPolyNear = turf.buffer(selectedTurfPoint, meter2km(innerDistance), 'kilometers');
+    var bufferedTurfPolyNear = turf.buffer(selectedTurfPoint, feet2km(innerDistance), 'kilometers');
 
 	    //generate maximum distance buffer
-	    var bufferedTurfPolyFar = turf.buffer(selectedTurfPoint, meter2km(outerDistance), 'kilometers');
+	    var bufferedTurfPolyFar = turf.buffer(selectedTurfPoint, feet2km(outerDistance), 'kilometers');
 
 	    //erase the min dist buffer from max dist buffer, donut!
 	    var justFarBuffer = turf.erase(
